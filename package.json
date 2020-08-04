@@ -1,0 +1,37 @@
+{
+  "name": "u-develop-it",
+  "version": "1.0.0",
+  "description": "Backend for U Vote It, a voting application for a group to pick their next president.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "migrate": "sqlite3 db/election.db < db/schema.sql",
+    "seed": "sqlite3 db/election.db < db/seeds.sql",
+    "db": "sqlite3 db/election.db"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devmadia/u-develop-it.git"
+  },
+  "keywords": [
+    "voting application",
+    "node.js",
+    "express.js",
+    "mysql",
+    "crud",
+    "jest"
+  ],
+  "author": "Devmadia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Devmadia/u-develop-it/issues"
+  },
+  "homepage": "https://github.com/Devmadia/u-develop-it#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.2.2"
+  }
+}
