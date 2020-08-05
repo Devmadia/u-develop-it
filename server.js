@@ -1,5 +1,9 @@
 const express = require('express');
 
+// imports the inputCheck module
+const inputCheck = require('./utils/inputCheck');
+
+
 // import the sqlite3 package to connect to the SQLite database
 const sqlite3 = require('sqlite3').verbose();
 
@@ -72,6 +76,15 @@ app.delete('/api/candidate/:id', (req, res) => {
       });
     });
   });
+
+// Create a candidate
+app.post('/api/candidate', ({ body }, res) => {
+    const errors = inputCheck(body, 'first_name', 'last_name', 'industry_connected');
+    if (errors) {
+      res.status(400).json({ error: errors });
+      return;
+    }
+});
 
 // Default response for any other request(Not Found) Catch all
 app.use((req, res) => {
