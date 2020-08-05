@@ -56,45 +56,22 @@ app.get('/api/candidate/:id', (req, res) => {
     });
 });
 
-// // Test the Express.js Connection
-// app.get('/', (req, res) => {
-//     res.json({
-//       message: 'Hello World'
-//     });
-// });
-
-//  test the connection to the database by using a SQLite method to execute SQL commands
-// db.all(`SELECT * FROM candidates`, (err, rows) => {
-//     console.log(rows);
-// });
-
-// GET a single candidate
-// db.get(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
-//     if(err) {
-//       console.log(err);
-//     }
-//     console.log(row);
-// });
-
 // Delete a candidate
-// db.run(`DELETE FROM candidates WHERE id = ?`, 1, function(err, result) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     console.log(result, this, this.changes);
-// });
-
-// Create a candidate
-// const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
-//               VALUES (?,?,?,?)`;
-// const params = [1, 'Ronald', 'Firbank', 1];
-// // ES5 function, not arrow function, to use this
-// db.run(sql, params, function(err, result) {
-//   if (err) {
-//     console.log(err);
-//   }
-//   console.log(result, this.lastID);
-// });
+app.delete('/api/candidate/:id', (req, res) => {
+    const sql = `DELETE FROM candidates WHERE id = ?`;
+    const params = [req.params.id];
+    db.run(sql, params, function(err, result) {
+      if (err) {
+        res.status(400).json({ error: res.message });
+        return;
+      }
+  
+      res.json({
+        message: 'successfully deleted',
+        changes: this.changes
+      });
+    });
+  });
 
 // Default response for any other request(Not Found) Catch all
 app.use((req, res) => {
@@ -112,8 +89,3 @@ db.on('open', () => {
       console.log(`Server running on port ${PORT}`);
     });
 });
-
-// start the Express.js server on port 3001
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
