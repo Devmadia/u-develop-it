@@ -36,7 +36,25 @@ app.get('/api/candidates', (req, res) => {
         data: rows
       });
     });
-  });
+});
+
+// Get single candidate
+app.get('/api/candidate/:id', (req, res) => {
+    const sql = `SELECT * FROM candidates 
+                 WHERE id = ?`;
+    const params = [req.params.id];
+    db.get(sql, params, (err, row) => {
+      if (err) {
+        res.status(400).json({ error: err.message });
+        return;
+      }
+  
+      res.json({
+        message: 'success',
+        data: row
+      });
+    });
+});
 
 // // Test the Express.js Connection
 // app.get('/', (req, res) => {
