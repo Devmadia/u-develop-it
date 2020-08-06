@@ -4,7 +4,7 @@ const db = require('../../db/database');
 const inputCheck = require('../../utils/inputCheck');
 
 // Get all candidates
-app.get('/api/candidates', (req, res) => {
+router.get('/candidates', (req, res) => {
     const sql = `SELECT candidates.*, parties.name 
              AS party_name 
              FROM candidates 
@@ -26,7 +26,7 @@ app.get('/api/candidates', (req, res) => {
 });
 
 // Get single candidate
-app.get('/api/candidate/:id', (req, res) => {
+router.get('/candidate/:id', (req, res) => {
     const sql = `SELECT candidates.*, parties.name 
              AS party_name 
              FROM candidates 
@@ -48,7 +48,7 @@ app.get('/api/candidate/:id', (req, res) => {
 });
 
 // routes to handle updates
-app.put('/api/candidate/:id', (req, res) => {
+router.put('/candidate/:id', (req, res) => {
     const sql = `UPDATE candidates SET party_id = ? 
                  WHERE id = ?`;
     const params = [req.body.party_id, req.params.id];
@@ -68,7 +68,7 @@ app.put('/api/candidate/:id', (req, res) => {
 });
 
 // Delete a candidate
-app.delete('/api/candidate/:id', (req, res) => {
+router.delete('/candidate/:id', (req, res) => {
     const sql = `DELETE FROM candidates WHERE id = ?`;
     const params = [req.params.id];
     db.run(sql, params, function(err, result) {
@@ -85,7 +85,7 @@ app.delete('/api/candidate/:id', (req, res) => {
   });
 
 // Create a candidate
-app.post('/api/candidate', ({ body }, res) => {
+router.post('/candidate', ({ body }, res) => {
     const errors = inputCheck(body, 'first_name', 'last_name', 'industry_connected');
     if (errors) {
       res.status(400).json({ error: errors });
